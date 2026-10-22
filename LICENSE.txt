@@ -1,0 +1,69 @@
+================================================================================
+SHALIK FURNITURE GENERATOR SUITE FOR RHINOCEROS
+COMMERCIAL PROPRIETARY SOFTWARE LICENSE & COPYRIGHT AGREEMENT
+================================================================================
+
+SOFTWARE:     Shalik Furniture Generator Suite for Rhino 8 & 7
+VERSION:      1.0.0 (Release Build)
+AUTHOR:       Architect Sakhawat Hosen Sumon
+EMAIL:        arch.sakhawat@gmail.com
+FACEBOOK:     https://www.facebook.com/sakhawat.sumon2
+GITHUB REPO:  https://github.com/arch-sakhawat/SHALIK-FURNITURE
+
+COPYRIGHT NOTICE:
+Copyright (c) 2026 Sakhawat Hosen Sumon. All Rights Reserved.
+Registered Architectural & Computational Software Intellectual Property.
+
+================================================================================
+CRITICAL LEGAL NOTICE — THIS SOFTWARE IS NOT FREE
+================================================================================
+
+1. PROPRIETARY & COMMERCIAL NATURE:
+   This software is strictly PROPRIETARY AND COMMERCIAL. THIS IS NOT FREE OR
+   OPEN-SOURCE SOFTWARE. Access to the source code repository or distribution
+   binaries does NOT grant any right to copy, distribute, modify, or deploy
+   this software without explicit written authorization and purchase of a valid
+   commercial license from Sakhawat Hosen Sumon.
+
+2. STRICT PROHIBITION AGAINST COPYING (ANTI-PIRACY):
+   - You MAY NOT copy, reproduce, duplicate, mirror, publish, or redistribute any
+     portion of this software, its source code (.py, .cs), compiled binaries (.rhp,
+     .exe, .dll, .yak), toolbar definitions (.rui), icons, UI designs, or algorithms.
+   - You MAY NOT reverse-engineer, decompile, disassemble, or extract proprietary
+     parametric furniture geometric solvers or workflows.
+   - You MAY NOT remove, alter, or obscure any copyright notices, author credentials,
+     photographs, or proprietary watermarks from the software or files.
+   - You MAY NOT sell, resell, rent, lease, sublicense, or commercially exploit this
+     software without an official commercial license agreement signed by the author.
+
+3. LEGAL LITIGATION & LAWSUIT WARNING (LEGAL ACTION CLAUSE):
+   ANY UNAUTHORIZED COPYING, DUPLICATION, MODIFICATION, OR REDISTRIBUTION OF THIS
+   SOFTWARE CONSTITUTES A DIRECT, WILLFUL VIOLATION OF INTELLECTUAL PROPERTY LAW,
+   COPYRIGHT LAW, AND COMMERCIAL TRADE SECRET STATUTES.
+
+   IF ANY INDIVIDUAL, COMPANY, ORGANIZATION, OR ENTITY COPIES, REDISTRIBUTES, OR
+   USES THIS SOFTWARE WITHOUT OFFICIAL PERMISSION AND PURCHASE, IMMEDIATE LEGAL
+   ACTION AND COURT LAWSUITS (CASES) WILL BE FILED AGAINST THEM FOR:
+     (a) Statutory and actual damages under domestic and international copyright laws;
+     (b) Confiscation and injunctions against infringing materials;
+     (c) Attorney fees, court filing costs, and punitive damages;
+     (d) Criminal prosecution where applicable under digital piracy acts.
+
+4. PERMITTED USE:
+   A valid license granted directly by Sakhawat Hosen Sumon permits the licensee
+   to install and execute the software on authorized workstations for internal
+   architectural and interior design production only.
+
+5. DISCLAIMER OF WARRANTY:
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+
+================================================================================
+FOR OFFICIAL COMMERCIAL LICENSES, PURCHASES, OR INQUIRIES:
+Contact Author & Architect:
+  Sakhawat Hosen Sumon
+  Email: arch.sakhawat@gmail.com
+  Facebook: https://www.facebook.com/sakhawat.sumon2
+  GitHub: https://github.com/arch-sakhawat/SHALIK-FURNITURE
+================================================================================

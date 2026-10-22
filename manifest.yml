@@ -1,0 +1,45 @@
+---
+name: ShalikFurniture
+version: 1.0.0
+authors:
+  - Sakhawat Hosen Sumon <arch.sakhawat@gmail.com>
+license: Commercial Proprietary
+description: >
+  Shalik Furniture Modeling & Automated Generator Suite for Rhino 8 & 7.
+  Architect & Developer: Sakhawat Hosen Sumon (Email: arch.sakhawat@gmail.com).
+  CRITICAL: COMMERCIAL PROPRIETARY SOFTWARE — NOT FREE. All rights reserved.
+  Unauthorized copying, distribution, or decompilation is strictly prohibited and subject to legal prosecution and court cases.
+  Includes 6 parametric generators & tools with live viewport previews:
+    Bed          - Modern Platform, Cantilever, Wingback, Hotel Wall-Panel, Canopy, Tatami & Daybeds
+    Sofa         - Modern Linear, L-Chaise, U-Sectional, Tuxedo, Curved & Daybeds
+    Dining Table - Auto-Seated (2-12 Seats) Rectangular, Round, Oval & Boat Tables with Designer Chairs
+    Kitchen      - Modern Ergonomic Base, Tall & Wall Cabinet Millwork with Appliances & Warm-Yellow LED Lighting
+    Office Desk  - Executive Desks, Computer Workstations, Modesty Panels & Ergonomic Task Chairs
+    InstantSKP   - 3D Warehouse In-Rhino Browser & Local SketchUp .SKP Importer
+    Master Hub   - All-in-One GUI Hub launcher and document unit converter
+  Includes custom dark-red themed Rhino toolbar with high-DPI icons.
+url: "https://github.com/arch-sakhawat/SHALIK-FURNITURE"
+keywords:
+  - guid:0ce7337f-ec52-45da-9fd3-cc40db64b2fa
+  - furniture
+  - bed
+  - sofa
+  - couch
+  - sectional
+  - dining
+  - table
+  - chairs
+  - kitchen
+  - cabinet
+  - millwork
+  - desk
+  - office
+  - workstation
+  - instant-skp
+  - skp
+  - 3dwarehouse
+  - architecture
+  - interior
+  - parametric
+  - generator
+  - bim
