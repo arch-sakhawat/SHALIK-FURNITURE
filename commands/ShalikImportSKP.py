@@ -372,6 +372,18 @@ if RHINO_AVAILABLE:
             btn_search.Click += self.OnSearchClicked
 
             # Action Buttons
+            btn_signin = forms.Button()
+            btn_signin.Text = "Sign In"
+            btn_signin.ToolTip = "Open Trimble ID Sign In page"
+            btn_signin.Height = 28
+            btn_signin.Click += lambda s, e: self.NavigateTo("https://identity.trimble.com/trimble-identity/login")
+
+            btn_web = forms.Button()
+            btn_web.Text = "Open in Browser"
+            btn_web.ToolTip = "Open 3D Warehouse in your default browser (Chrome/Edge). Any model you download will automatically be imported into Rhino!"
+            btn_web.Height = 28
+            btn_web.Click += lambda s, e: webbrowser.open("https://3dwarehouse.sketchup.com/search/models?q=furniture")
+
             btn_local = forms.Button()
             btn_local.Text = "Import Local .SKP"
             btn_local.Font = drawing.Font(drawing.FontFamilies.Sans, 8.5, drawing.FontStyle.Bold)
@@ -392,6 +404,8 @@ if RHINO_AVAILABLE:
                 self.drp_cat,
                 self.txt_search,
                 btn_search,
+                btn_signin,
+                btn_web,
                 btn_local,
                 btn_folder
             )
@@ -399,6 +413,7 @@ if RHINO_AVAILABLE:
 
             # --- 2. EMBEDDED CHROMIUM WEB VIEW ---
             self.web_view = forms.WebView()
+            self.web_view.OpenNewWindow += self.OnOpenNewWindow
             self.web_view.Url = System.Uri("https://3dwarehouse.sketchup.com/search/models?q=furniture")
 
             # --- 3. FULL VIEWPORT TABLE LAYOUT ---
@@ -425,6 +440,20 @@ if RHINO_AVAILABLE:
                 self.web_view.Url = System.Uri(url_str)
             except Exception as ex:
                 Rhino.RhinoApp.WriteLine("Navigation error: %s" % ex)
+
+        def OnOpenNewWindow(self, sender, e):
+            """
+            Intercepts popups from Trimble Identity / 3D Warehouse and routes them in-place,
+            allowing the user to complete login without being blocked by popup restrictions.
+            """
+            try:
+                e.Cancel = True
+                if e.Uri:
+                    u_str = e.Uri.ToString()
+                    Rhino.RhinoApp.WriteLine(u"3D Warehouse Sign-In: Loading {}".format(u_str))
+                    self.web_view.Url = e.Uri
+            except Exception as ex:
+                Rhino.RhinoApp.WriteLine("OpenNewWindow error: %s" % ex)
 
         def OnCategoryChanged(self, sender, e):
             key = self.drp_cat.SelectedKey
