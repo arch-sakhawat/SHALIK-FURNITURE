@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 # ==============================================================================
 # Shalik Furniture Suite - In-Rhino 3D Warehouse Browser & Instant SKP Importer
 # Author & Architect: Sakhawat Hosen Sumon
@@ -47,7 +47,7 @@ try:
 except ImportError:
     ArchUnits = None
 
-# Active browser window singleton instance to prevent multiple duplicate windows
+# Active browser window singleton instance to prevent duplicate windows
 _ACTIVE_WAREHOUSE_FORM = None
 
 # Monitored download folders
@@ -68,7 +68,6 @@ def is_file_ready(file_path):
     if not os.path.exists(file_path):
         return False
     try:
-        # Check size stability over 150ms
         s1 = os.path.getsize(file_path)
         if s1 == 0:
             return False
@@ -129,7 +128,7 @@ def import_and_place_skp(file_path, insert_pt=None, drop_to_floor=True):
             imported_ids = sel
 
     if not imported_ids:
-        Rhino.RhinoApp.WriteLine("Import completed, but no geometry was imported.")
+        Rhino.RhinoApp.WriteLine("Import completed, but no geometry was detected.")
         return False
 
     # Create hierarchical layer: FURNITURE :: SKP_WAREHOUSE :: <ModelName>
@@ -214,10 +213,10 @@ if RHINO_AVAILABLE:
         def __init__(self, file_name, file_size_mb):
             super(ModelPlacementDialog, self).__init__()
             self.Title = "3D Warehouse Model Downloaded"
-            self.ClientSize = drawing.Size(460, 260)
+            self.ClientSize = drawing.Size(460, 240)
             self.Resizable = False
             self.Padding = drawing.Padding(18)
-            self.ChosenMode = "pick"  # "pick", "origin", "cancel"
+            self.ChosenMode = "pick"
 
             layout = forms.DynamicLayout()
             layout.Spacing = drawing.Size(10, 8)
@@ -242,7 +241,7 @@ if RHINO_AVAILABLE:
 
             # Buttons
             btn_pick = forms.Button()
-            btn_pick.Text = u"Pick Insertion Point in Viewport (Recommended)"
+            btn_pick.Text = "Pick Insertion Point in Viewport (Recommended)"
             btn_pick.Font = drawing.Font(drawing.FontFamilies.Sans, 9.5, drawing.FontStyle.Bold)
             btn_pick.Height = 36
             btn_pick.BackgroundColor = drawing.Color.FromArgb(139, 0, 0)
@@ -251,7 +250,7 @@ if RHINO_AVAILABLE:
             layout.AddRow(btn_pick)
 
             btn_origin = forms.Button()
-            btn_origin.Text = u"Place at World Origin (0, 0, 0)"
+            btn_origin.Text = "Place at World Origin (0, 0, 0)"
             btn_origin.Font = drawing.Font(drawing.FontFamilies.Sans, 9)
             btn_origin.Height = 32
             btn_origin.Click += self.OnOriginClicked
@@ -259,7 +258,7 @@ if RHINO_AVAILABLE:
 
             btn_cancel = forms.Button()
             btn_cancel.Text = "Cancel"
-            btn_cancel.Height = 28
+            btn_cancel.Height = 26
             btn_cancel.Click += self.OnCancelClicked
             layout.AddRow(None, btn_cancel)
 
@@ -280,18 +279,19 @@ if RHINO_AVAILABLE:
 
     class WarehouseBrowserForm(forms.Form):
         """
-        Native In-Rhino 3D Warehouse Browser with Edge/Chromium engine,
-        automatic download interceptor, category shortcuts, and 1-click Rhino placement.
+        Optimized In-Rhino 3D Warehouse Browser:
+        - Slim, modern 38px toolbar (Back, Forward, Reload, Home, Category Dropdown, Search, Local SKP, Downloads).
+        - 100% full-screen responsive WebView2 filling all available space.
+        - Background download detection with 1-click viewport placement.
         """
         def __init__(self):
             super(WarehouseBrowserForm, self).__init__()
             self.Title = "Shalik Furniture - Instant 3D Warehouse & SKP Importer"
-            self.ClientSize = drawing.Size(1080, 800)
-            self.MinimumSize = drawing.Size(760, 500)
+            self.ClientSize = drawing.Size(1120, 800)
+            self.MinimumSize = drawing.Size(800, 520)
             self.Resizable = True
             self.Topmost = False
 
-            # Set Form Icon if available
             try:
                 ico_path = os.path.join(_parent_dir, "setup.ico")
                 if os.path.exists(ico_path):
@@ -304,144 +304,120 @@ if RHINO_AVAILABLE:
             self.StartWatchers()
 
         def InitUI(self):
-            main_layout = forms.DynamicLayout()
-            main_layout.Spacing = drawing.Size(0, 0)
+            # --- 1. SLIM BRANDED TOOLBAR (Height ~40px) ---
+            pnl_bar = forms.Panel()
+            pnl_bar.BackgroundColor = drawing.Color.FromArgb(139, 0, 0)
+            pnl_bar.Padding = drawing.Padding(8, 6)
 
-            # --- TOP BRANDED HEADER ---
-            pnl_header = forms.Panel()
-            pnl_header.BackgroundColor = drawing.Color.FromArgb(139, 0, 0)
-            pnl_header.Padding = drawing.Padding(12, 8)
+            bar_layout = forms.DynamicLayout()
+            bar_layout.Spacing = drawing.Size(6, 0)
 
-            hdr_layout = forms.DynamicLayout()
-            hdr_layout.Spacing = drawing.Size(10, 4)
+            # Brand Tag
+            lbl_brand = forms.Label()
+            lbl_brand.Text = "SHALIK 3D WAREHOUSE"
+            lbl_brand.Font = drawing.Font(drawing.FontFamilies.Sans, 10, drawing.FontStyle.Bold)
+            lbl_brand.TextColor = drawing.Color.FromArgb(255, 255, 255)
+            lbl_brand.VerticalAlignment = forms.VerticalAlignment.Center
 
-            lbl_title = forms.Label()
-            lbl_title.Text = "SHALIK FURNITURE - 3D WAREHOUSE & INSTANT SKP"
-            lbl_title.Font = drawing.Font(drawing.FontFamilies.Sans, 13, drawing.FontStyle.Bold)
-            lbl_title.TextColor = drawing.Color.FromArgb(255, 255, 255)
-
-            lbl_sub = forms.Label()
-            lbl_sub.Text = "Browse SketchUp 3D Warehouse, download any furniture model, and 1-click auto-import with correct scale & floor placement"
-            lbl_sub.Font = drawing.Font(drawing.FontFamilies.Sans, 8.5)
-            lbl_sub.TextColor = drawing.Color.FromArgb(240, 220, 220)
-
-            hdr_layout.AddRow(lbl_title)
-            hdr_layout.AddRow(lbl_sub)
-            pnl_header.Content = hdr_layout
-            main_layout.AddRow(pnl_header)
-
-            # --- NAVIGATION & ACTION TOOLBAR ---
-            pnl_nav = forms.Panel()
-            pnl_nav.BackgroundColor = drawing.Color.FromArgb(242, 242, 245)
-            pnl_nav.Padding = drawing.Padding(8, 6)
-
-            nav_layout = forms.DynamicLayout()
-            nav_layout.Spacing = drawing.Size(6, 4)
-
+            # Nav Buttons
             btn_back = forms.Button()
-            btn_back.Text = "< Back"
-            btn_back.Width = 65
+            btn_back.Text = "<"
+            btn_back.Width = 32
+            btn_back.Height = 28
+            btn_back.ToolTip = "Go Back"
             btn_back.Click += lambda s, e: self.web_view.GoBack() if self.web_view.CanGoBack else None
 
             btn_fwd = forms.Button()
-            btn_fwd.Text = "Forward >"
-            btn_fwd.Width = 80
+            btn_fwd.Text = ">"
+            btn_fwd.Width = 32
+            btn_fwd.Height = 28
+            btn_fwd.ToolTip = "Go Forward"
             btn_fwd.Click += lambda s, e: self.web_view.GoForward() if self.web_view.CanGoForward else None
 
             btn_reload = forms.Button()
             btn_reload.Text = "Reload"
-            btn_reload.Width = 70
+            btn_reload.Height = 28
             btn_reload.Click += lambda s, e: self.web_view.Reload()
 
             btn_home = forms.Button()
             btn_home.Text = "Home"
-            btn_home.Width = 70
+            btn_home.Height = 28
             btn_home.Click += lambda s, e: self.NavigateTo("https://3dwarehouse.sketchup.com/search/models?q=furniture")
 
+            # Quick Category DropDown
+            self.drp_cat = forms.DropDown()
+            self.drp_cat.Width = 200
+            self.drp_cat.Height = 28
+            self.drp_cat.Items.Add(forms.ListItem(Text="-- Categories: All Furniture --", Key="furniture"))
+            self.drp_cat.Items.Add(forms.ListItem(Text="Sofas & Sectionals", Key="modern sofa sectional couch"))
+            self.drp_cat.Items.Add(forms.ListItem(Text="Beds & Suites", Key="platform bed master suite"))
+            self.drp_cat.Items.Add(forms.ListItem(Text="Dining Tables & Sets", Key="dining table chairs set"))
+            self.drp_cat.Items.Add(forms.ListItem(Text="Kitchen Cabinets & Islands", Key="kitchen cabinets millwork island"))
+            self.drp_cat.Items.Add(forms.ListItem(Text="Office Desks & Workstations", Key="executive office desk workstation"))
+            self.drp_cat.Items.Add(forms.ListItem(Text="Armchairs & Lounges", Key="lounge armchair contemporary"))
+            self.drp_cat.Items.Add(forms.ListItem(Text="Coffee & Accent Tables", Key="coffee table contemporary"))
+            self.drp_cat.Items.Add(forms.ListItem(Text="Architectural Lighting", Key="interior pendant light chandelier lamp"))
+            self.drp_cat.SelectedIndex = 0
+            self.drp_cat.SelectedIndexChanged += self.OnCategoryChanged
+
+            # Search Box (fills space)
             self.txt_search = forms.TextBox()
-            self.txt_search.PlaceholderText = "Search furniture models (e.g., modern sofa, bed, executive desk, dining chair)..."
+            self.txt_search.PlaceholderText = "Search 3D Warehouse models..."
+            self.txt_search.Height = 28
             self.txt_search.KeyDown += self.OnSearchKeyDown
 
             btn_search = forms.Button()
             btn_search.Text = "Search"
-            btn_search.Width = 80
+            btn_search.Height = 28
             btn_search.Click += self.OnSearchClicked
 
+            # Action Buttons
             btn_local = forms.Button()
             btn_local.Text = "Import Local .SKP"
             btn_local.Font = drawing.Font(drawing.FontFamilies.Sans, 8.5, drawing.FontStyle.Bold)
-            btn_local.Width = 140
+            btn_local.Height = 28
             btn_local.Click += self.OnImportLocalClicked
 
             btn_folder = forms.Button()
             btn_folder.Text = "Downloads"
-            btn_folder.Width = 95
+            btn_folder.Height = 28
             btn_folder.Click += self.OnOpenFolderClicked
 
-            nav_row = forms.DynamicLayout()
-            nav_row.Spacing = drawing.Size(6, 0)
-            nav_row.AddRow(btn_back, btn_fwd, btn_reload, btn_home, self.txt_search, btn_search, btn_local, btn_folder)
-            nav_layout.AddRow(nav_row)
+            bar_layout.AddRow(
+                lbl_brand,
+                btn_back,
+                btn_fwd,
+                btn_reload,
+                btn_home,
+                self.drp_cat,
+                self.txt_search,
+                btn_search,
+                btn_local,
+                btn_folder
+            )
+            pnl_bar.Content = bar_layout
 
-            # --- CATEGORY QUICK JUMP PILLS ---
-            cat_row = forms.DynamicLayout()
-            cat_row.Spacing = drawing.Size(4, 0)
-
-            lbl_cat = forms.Label()
-            lbl_cat.Text = "Quick Categories:"
-            lbl_cat.Font = drawing.Font(drawing.FontFamilies.Sans, 8, drawing.FontStyle.Bold)
-            lbl_cat.TextColor = drawing.Color.FromArgb(90, 90, 90)
-
-            cats = [
-                ("Sofas & Couches", "modern sofa couch sectional"),
-                ("Beds & Suites", "luxury platform bed master suite"),
-                ("Dining Tables", "modern dining table chairs set"),
-                ("Kitchen Cabinets", "kitchen cabinet millwork island"),
-                ("Office Desks", "executive office workstation desk"),
-                ("Armchairs & Lounges", "contemporary lounge armchair"),
-                ("Coffee & Side Tables", "modern coffee table end table"),
-                ("Lighting & Lamps", "interior pendant light chandelier lamp"),
-            ]
-
-            cat_buttons = [lbl_cat]
-            for cname, cquery in cats:
-                b = forms.Button()
-                b.Text = cname
-                b.Font = drawing.Font(drawing.FontFamilies.Sans, 8)
-                b.Height = 24
-                # Closure binding
-                b.Click += (lambda q: lambda s, e: self.SearchCategory(q))(cquery)
-                cat_buttons.append(b)
-
-            cat_row.AddRow(*cat_buttons)
-            nav_layout.AddRow(cat_row)
-
-            pnl_nav.Content = nav_layout
-            main_layout.AddRow(pnl_nav)
-
-            # --- EMBEDDED CHROMIUM WEB VIEW ---
+            # --- 2. EMBEDDED CHROMIUM WEB VIEW ---
             self.web_view = forms.WebView()
-            initial_url = System.Uri("https://3dwarehouse.sketchup.com/search/models?q=furniture")
-            self.web_view.Url = initial_url
+            self.web_view.Url = System.Uri("https://3dwarehouse.sketchup.com/search/models?q=furniture")
 
-            main_layout.AddRow(self.web_view)
+            # --- 3. FULL VIEWPORT TABLE LAYOUT ---
+            # Using TableLayout guarantees the WebView expands to 100% of the window
+            table = forms.TableLayout()
+            table.Spacing = drawing.Size(0, 0)
+            table.Padding = drawing.Padding(0)
 
-            # --- BOTTOM STATUS BAR ---
-            pnl_status = forms.Panel()
-            pnl_status.BackgroundColor = drawing.Color.FromArgb(245, 245, 247)
-            pnl_status.Padding = drawing.Padding(10, 4)
+            # Top toolbar (Height fixed, does not scale)
+            row_bar = forms.TableRow(forms.TableCell(pnl_bar, False))
+            row_bar.ScaleHeight = False
+            table.Rows.Add(row_bar)
 
-            stat_layout = forms.DynamicLayout()
-            self.lbl_status = forms.Label()
-            self.lbl_status.Text = "ℹ 3D Warehouse Active. When you click Download on any model, Shalik Furniture will automatically prompt to place it into your Rhino scene."
-            self.lbl_status.Font = drawing.Font(drawing.FontFamilies.Sans, 8)
-            self.lbl_status.TextColor = drawing.Color.FromArgb(80, 80, 80)
-            stat_layout.AddRow(self.lbl_status)
-            pnl_status.Content = stat_layout
+            # Web View (Expands to 100% height and width!)
+            row_web = forms.TableRow(forms.TableCell(self.web_view, True))
+            row_web.ScaleHeight = True
+            table.Rows.Add(row_web)
 
-            main_layout.AddRow(pnl_status)
-
-            self.Content = main_layout
+            self.Content = table
             self.Closed += self.OnFormClosed
 
         def NavigateTo(self, url_str):
@@ -450,15 +426,17 @@ if RHINO_AVAILABLE:
             except Exception as ex:
                 Rhino.RhinoApp.WriteLine("Navigation error: %s" % ex)
 
-        def SearchCategory(self, query):
-            q_enc = query.replace(" ", "+")
-            self.txt_search.Text = query
-            self.NavigateTo("https://3dwarehouse.sketchup.com/search/models?q=" + q_enc)
+        def OnCategoryChanged(self, sender, e):
+            key = self.drp_cat.SelectedKey
+            if key:
+                q = key.replace(" ", "+")
+                self.NavigateTo("https://3dwarehouse.sketchup.com/search/models?q=" + q)
 
         def OnSearchClicked(self, sender, e):
             q = self.txt_search.Text.strip()
             if q:
-                self.SearchCategory(q)
+                q_enc = q.replace(" ", "+")
+                self.NavigateTo("https://3dwarehouse.sketchup.com/search/models?q=" + q_enc)
 
         def OnSearchKeyDown(self, sender, e):
             if e.Key == forms.Keys.Enter:
@@ -481,7 +459,6 @@ if RHINO_AVAILABLE:
 
         def StartWatchers(self):
             """Initializes background watchers on user download folders."""
-            # Snapshot existing files so we only detect new downloads
             for d in [USER_DOWNLOADS, INSTANTSKP_DOWNLOADS, SHALIK_DOWNLOADS]:
                 if os.path.exists(d):
                     try:
@@ -506,7 +483,6 @@ if RHINO_AVAILABLE:
                         if f.lower().endswith(".skp"):
                             full_path = os.path.join(d, f)
                             if full_path not in self.processed_files:
-                                # Found a new .skp file! Check if it's done downloading
                                 if is_file_ready(full_path):
                                     self.processed_files.add(full_path)
                                     self.HandleDownloadedModel(full_path)
@@ -519,19 +495,16 @@ if RHINO_AVAILABLE:
             try:
                 file_name = os.path.basename(file_path)
                 size_mb = os.path.getsize(file_path) / (1024.0 * 1024.0)
-                self.lbl_status.Text = u"✓ Downloaded: {} ({:.2f} MB). Select placement...".format(file_name, size_mb)
 
                 # Show placement modal dialog
                 dlg = ModelPlacementDialog(file_name, size_mb)
                 res = dlg.ShowModal(self)
 
                 if dlg.ChosenMode == "cancel":
-                    self.lbl_status.Text = "Import cancelled."
                     return
 
                 insert_pt = None
                 if dlg.ChosenMode == "pick":
-                    # Minimize this browser window so user can click in Rhino viewport
                     prev_state = self.WindowState
                     self.WindowState = forms.WindowState.Minimized
 
@@ -542,12 +515,10 @@ if RHINO_AVAILABLE:
                     if rc == Rhino.Commands.Result.Success:
                         insert_pt = pt
 
-                    # Restore browser
                     self.WindowState = prev_state
 
                 # Import and place
                 import_and_place_skp(file_path, insert_pt=insert_pt, drop_to_floor=True)
-                self.lbl_status.Text = u"✓ Successfully imported '{}' into Rhino!".format(file_name)
 
             except Exception as ex:
                 Rhino.RhinoApp.WriteLine("Import handler error: %s" % ex)
@@ -584,4 +555,3 @@ def run():
 
 if __name__ in ["__main__", "ShalikImportSKP", "InstantSKP", "ShalikInstantSKP", "ShalikWarehouse"]:
     show_warehouse_browser()
-
