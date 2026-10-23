@@ -93,8 +93,11 @@ Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\Comman
 Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "ArchOfficeDesk"; ValueData: "66;ArchOfficeDesk"
 Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "FurnitureOfficeDesk"; ValueData: "66;FurnitureOfficeDesk"
 Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "ShalikDesk"; ValueData: "66;ShalikDesk"
-Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "ShalikImportSKP"; ValueData: "66;ShalikImportSKP"
+Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "InstantSKP"; ValueData: "66;InstantSKP"
 Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "ShalikInstantSKP"; ValueData: "66;ShalikInstantSKP"
+Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "ShalikImportSKP"; ValueData: "66;ShalikImportSKP"
+Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "ArchImportSKP"; ValueData: "66;ArchImportSKP"
+Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "ShalikWarehouse"; ValueData: "66;ShalikWarehouse"
 Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "ShalikFurnitureAbout"; ValueData: "66;ShalikFurnitureAbout"
 Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "ShalikFurnitureLicense"; ValueData: "66;ShalikFurnitureLicense"
 

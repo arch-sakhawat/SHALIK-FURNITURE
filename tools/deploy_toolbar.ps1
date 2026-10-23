@@ -14,7 +14,7 @@ if (-not (Test-Path $pkgDir)) { New-Item -ItemType Directory -Path $pkgDir -Forc
 if (-not (Test-Path $importedDir)) { New-Item -ItemType Directory -Path $importedDir -Force | Out-Null }
 
 # Copy core files
-$files = @("ShalikFurniture.rhp", "ShalikFurniture.rui", "ArchUnits.py", "ShalikFurniture.py", "ShalikAbout.py", "icon.png", "setup.ico", "manifest.yml", "README.md", "LICENSE.txt")
+$files = @("ShalikFurniture.rhp", "ShalikFurniture.rui", "ArchUnits.py", "ShalikFurniture.py", "ShalikAbout.py", "ShalikImportSKP.py", "author.jpg", "author.png", "icon.png", "setup.ico", "manifest.yml", "README.md", "LICENSE.txt")
 foreach ($f in $files) {
     Copy-Item (Join-Path $root $f) (Join-Path $pkgDir $f) -Force
 }

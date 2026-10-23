@@ -231,7 +231,7 @@ if RHINO_AVAILABLE:
 
                 btn_launch = forms.Button()
                 if key == "instantskp":
-                    btn_launch.Text = "Open SKP Hub"
+                    btn_launch.Text = "Launch 3D Warehouse"
                 else:
                     btn_launch.Text = "Launch " + key.capitalize()
                 btn_launch.Size = drawing.Size(120, 28)
