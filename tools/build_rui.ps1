@@ -109,14 +109,14 @@ $tools = @(
     @{ 
         id = "90000001-ec52-45da-9fd3-cc40db64b2fa"; 
         name = "InstantSKP";   
-        label = "Instant SKP Warehouse";   
-        tip = "InstantSKP - Browse & Import 3D Warehouse & SketchUp Furniture Models directly in Rhino"; 
+        label = "Instant SKP";   
+        tip = "InstantSKP - Browse & Import 3D Warehouse & SketchUp Models in Rhino"; 
         cmd = "! _InstantSKP";   
         icon = "InstantSKP";
         right_id = "90000002-ec52-45da-9fd3-cc40db64b2fa";
-        right_label = "Import Local SKP";
-        right_tip = "Shalik Smart SKP Furniture Importer & Local Library Browser";
-        right_cmd = "! _ShalikImportSKP"
+        right_label = "Instant SKP";
+        right_tip = "InstantSKP - Browse & Import 3D Warehouse & SketchUp Models in Rhino";
+        right_cmd = "! _InstantSKP"
     },
     # 8. About & Licence (ALWAYS LAST)
     @{ 

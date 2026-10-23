@@ -18,7 +18,6 @@ Copy-Item (Join-Path $root "ShalikFurniture.rui") $stage
 Copy-Item (Join-Path $root "ArchUnits.py") $stage
 Copy-Item (Join-Path $root "ShalikAbout.py") $stage
 Copy-Item (Join-Path $root "ShalikFurniture.py") $stage
-Copy-Item (Join-Path $root "ShalikImportSKP.py") $stage
 Copy-Item (Join-Path $root "icon.png") $stage
 Copy-Item (Join-Path $root "manifest.yml") $stage
 Copy-Item (Join-Path $root "README.md") $stage

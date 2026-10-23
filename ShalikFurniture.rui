@@ -46,7 +46,7 @@
         <right_macro_id>o0000002-ec52-45da-9fd3-cc40db64b2fa</right_macro_id>
       </tool_bar_item>
       <tool_bar_item guid="90000001-ec52-45da-9fd3-cc40db64b2fa" button_display_mode="control_only" button_style="normal">
-        <text><locale_1033>Instant SKP Warehouse</locale_1033></text>
+        <text><locale_1033>Instant SKP</locale_1033></text>
         <left_macro_id>90000001-ec52-45da-9fd3-cc40db64b2fa</left_macro_id>
         <right_macro_id>90000002-ec52-45da-9fd3-cc40db64b2fa</right_macro_id>
       </tool_bar_item>
@@ -155,20 +155,20 @@
       <script>! _ArchOfficeDesk</script>
     </macro_item>
     <macro_item guid="90000001-ec52-45da-9fd3-cc40db64b2fa" bitmap_id="90000001-ec52-45da-9fd3-cc40db64b2fa">
-      <text><locale_1033>Instant SKP Warehouse</locale_1033></text>
-      <tooltip><locale_1033>InstantSKP - Browse &amp; Import 3D Warehouse &amp; SketchUp Furniture Models directly in Rhino</locale_1033></tooltip>
-      <help_text><locale_1033>InstantSKP - Browse &amp; Import 3D Warehouse &amp; SketchUp Furniture Models directly in Rhino</locale_1033></help_text>
-      <button_text><locale_1033>Instant SKP Warehouse</locale_1033></button_text>
-      <menu_text><locale_1033>Instant SKP Warehouse</locale_1033></menu_text>
+      <text><locale_1033>Instant SKP</locale_1033></text>
+      <tooltip><locale_1033>InstantSKP - Browse &amp; Import 3D Warehouse &amp; SketchUp Models in Rhino</locale_1033></tooltip>
+      <help_text><locale_1033>InstantSKP - Browse &amp; Import 3D Warehouse &amp; SketchUp Models in Rhino</locale_1033></help_text>
+      <button_text><locale_1033>Instant SKP</locale_1033></button_text>
+      <menu_text><locale_1033>Instant SKP</locale_1033></menu_text>
       <script>! _InstantSKP</script>
     </macro_item>
     <macro_item guid="90000002-ec52-45da-9fd3-cc40db64b2fa" bitmap_id="90000001-ec52-45da-9fd3-cc40db64b2fa">
-      <text><locale_1033>Import Local SKP</locale_1033></text>
-      <tooltip><locale_1033>Shalik Smart SKP Furniture Importer &amp; Local Library Browser</locale_1033></tooltip>
-      <help_text><locale_1033>Shalik Smart SKP Furniture Importer &amp; Local Library Browser</locale_1033></help_text>
-      <button_text><locale_1033>Import Local SKP</locale_1033></button_text>
-      <menu_text><locale_1033>Import Local SKP</locale_1033></menu_text>
-      <script>! _ShalikImportSKP</script>
+      <text><locale_1033>Instant SKP</locale_1033></text>
+      <tooltip><locale_1033>InstantSKP - Browse &amp; Import 3D Warehouse &amp; SketchUp Models in Rhino</locale_1033></tooltip>
+      <help_text><locale_1033>InstantSKP - Browse &amp; Import 3D Warehouse &amp; SketchUp Models in Rhino</locale_1033></help_text>
+      <button_text><locale_1033>Instant SKP</locale_1033></button_text>
+      <menu_text><locale_1033>Instant SKP</locale_1033></menu_text>
+      <script>! _InstantSKP</script>
     </macro_item>
     <macro_item guid="a0000001-ec52-45da-9fd3-cc40db64b2fa" bitmap_id="a0000001-ec52-45da-9fd3-cc40db64b2fa">
       <text><locale_1033>About &amp; Licence</locale_1033></text>

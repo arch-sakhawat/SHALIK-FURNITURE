@@ -14,9 +14,11 @@ if (-not (Test-Path $pkgDir)) { New-Item -ItemType Directory -Path $pkgDir -Forc
 if (-not (Test-Path $importedDir)) { New-Item -ItemType Directory -Path $importedDir -Force | Out-Null }
 
 # Copy core files
-$files = @("ShalikFurniture.rhp", "ShalikFurniture.rui", "ArchUnits.py", "ShalikFurniture.py", "ShalikAbout.py", "ShalikImportSKP.py", "author.jpg", "author.png", "icon.png", "setup.ico", "manifest.yml", "README.md", "LICENSE.txt")
+$files = @("ShalikFurniture.rhp", "ShalikFurniture.rui", "ArchUnits.py", "ShalikFurniture.py", "ShalikAbout.py", "author.jpg", "author.png", "icon.png", "setup.ico", "manifest.yml", "README.md", "LICENSE.txt")
 foreach ($f in $files) {
-    Copy-Item (Join-Path $root $f) (Join-Path $pkgDir $f) -Force
+    if (Test-Path (Join-Path $root $f)) {
+        Copy-Item (Join-Path $root $f) (Join-Path $pkgDir $f) -Force
+    }
 }
 
 if (Test-Path (Join-Path $root "author.png")) {
@@ -26,6 +28,15 @@ if (Test-Path (Join-Path $root "author.png")) {
 Copy-Item (Join-Path $root "commands") $pkgDir -Recurse -Force
 Copy-Item (Join-Path $root "Code") $pkgDir -Recurse -Force
 Copy-Item (Join-Path $root "icons") $pkgDir -Recurse -Force
+
+# Deploy official InstantSKP package
+$instantSkpPkgDir = "$env:APPDATA\McNeel\Rhinoceros\packages\8.0\InstantSKP\1.0.1"
+if (-not (Test-Path $instantSkpPkgDir)) { New-Item -ItemType Directory -Path $instantSkpPkgDir -Force | Out-Null }
+$instantSkpSrc = Join-Path $root "instant skp\1.0.1"
+if (Test-Path $instantSkpSrc) {
+    Copy-Item "$instantSkpSrc\*" $instantSkpPkgDir -Recurse -Force
+    Write-Host "   Deployed official InstantSKP v1.0.1 to packages directory."
+}
 
 Write-Host "2. Copying to imported_rui_files cache..."
 $cachedRui = Join-Path $importedDir "ShalikFurniture_$pluginGuid.rui"

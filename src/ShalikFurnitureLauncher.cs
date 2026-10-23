@@ -144,7 +144,7 @@ namespace ShalikFurnitureLauncher
             btnY += btnGap;
             AddToolRow(gbTools, "Office Workstation & Chair", "Executive desks, computer setups & ergonomic mesh chairs", "ShalikOfficeDesk", btnY);
             btnY += btnGap;
-            AddToolRow(gbTools, "InstantSKP & 3D Warehouse", "Import from 3D Warehouse or local SketchUp .skp library", "ShalikImportSKP", btnY);
+            AddToolRow(gbTools, "InstantSKP 3D Warehouse", "Browse & import 3D Warehouse SketchUp models directly in Rhino", "InstantSKP", btnY);
 
             this.Controls.Add(gbTools);
 

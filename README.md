@@ -52,7 +52,7 @@ All generators automatically adapt to the active Rhino document units (**millime
 | <img src="icons/dining_64.png" width="32" height="32" /> | **Dining Sets & Chairs** | `ShalikDiningTable` / `ArchDiningTable` | Auto-Seated (2–12 Seats) Rectangular, Round, Oval & Boat Tables with Designer Chairs |
 | <img src="icons/kitchen_64.png" width="32" height="32" /> | **Kitchen Millwork** | `ShalikKitchen` / `ArchKitchen` | Modular Base, Tall & Wall Millwork, Cooktops, Sinks & Emissive Warm LED Lighting |
 | <img src="icons/desk_64.png" width="32" height="32" /> | **Executive Workstation** | `ShalikOfficeDesk` / `ArchOfficeDesk` | Executive Desks, Dual Monitor Computer Workstations, Modesty Panels & Ergonomic Chairs |
-| <img src="icons/skp_64.png" width="32" height="32" /> | **InstantSKP Importer** | `InstantSKP` / `ShalikImportSKP` | In-Rhino SketchUp 3D Warehouse Browser & Smart Local `.SKP` Library Importer |
+| <img src="icons/skp_64.png" width="32" height="32" /> | **InstantSKP 3D Warehouse** | `InstantSKP` / `ShalikInstantSKP` | Official InstantSKP v1.0.1 Integrated: Browse & Import Trimble 3D Warehouse SketchUp models directly inside Rhino with materials |
 | <img src="icons/about_64.png" width="32" height="32" /> | **About & Legal License** | `ShalikFurnitureAbout` / `ShalikAbout` | Author credentials, legal ownership verification, and licensing dialog |
 
 ---
@@ -75,7 +75,7 @@ All generators automatically adapt to the active Rhino document units (**millime
    - Dark-red themed (`#8B0000`) 8-button Rhino toolbar (`ShalikFurniture.rui`) featuring multi-resolution vector and bitmap icons for light and dark Rhino UI modes.
 
 5. **📦 InstantSKP 3D Warehouse Integration:**
-   - Directly browse SketchUp 3D Warehouse models from inside Rhino and import local `.skp` furniture models with automatic unit scaling and layer hygiene.
+   - Directly browse SketchUp 3D Warehouse models from inside Rhino and import `.skp` furniture models with full materials and textures via official InstantSKP v1.0.1 integration.
 
 ---
 

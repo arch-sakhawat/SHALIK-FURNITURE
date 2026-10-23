@@ -197,11 +197,6 @@ namespace ShalikFurniture
                 { "OfficeDesk",            "ShalikOfficeDesk.py" },
                 { "Desk",                  "ShalikOfficeDesk.py" },
 
-                { "ShalikImportSKP",       "ShalikImportSKP.py" },
-                { "ArchImportSKP",         "ShalikImportSKP.py" },
-                { "ImportSKP",             "ShalikImportSKP.py" },
-                { "SKPImport",             "ShalikImportSKP.py" },
-
                 { "ShalikFurnitureAbout",   "ShalikAbout.py" },
                 { "ShalikFurnitureLicense", "ShalikAbout.py" },
                 { "ArchFurnitureAbout",     "ShalikAbout.py" },
@@ -227,6 +222,14 @@ namespace ShalikFurniture
 
             // Ensure Toolbar is loaded and visible
             ShowToolbar();
+
+            // Ensure InstantSKP official plugin is loaded
+            try
+            {
+                var skpGuid = new Guid("0c2f1f48-7322-4a25-a014-a49dd0d26cca");
+                PlugIn.LoadPlugIn(skpGuid);
+            }
+            catch { }
 
             RhinoApp.WriteLine("Shalik Furniture Suite loaded successfully. Type 'ShalikFurniture' to open the Master Hub.");
             return LoadReturnCode.Success;
@@ -416,48 +419,15 @@ namespace ShalikFurniture
     }
 
     // ─────────────────────────────────────────────────────────────
-    //  InstantSKP & 3D Warehouse Commands
+    //  InstantSKP & 3D Warehouse Integration Commands
     // ─────────────────────────────────────────────────────────────
-    [CommandStyle(Style.ScriptRunner)]
-    public class InstantSKPCommand : Command
-    {
-        public override string EnglishName { get { return "InstantSKP"; } }
-        protected override Result RunCommand(RhinoDoc doc, RunMode mode)
-        {
-            ShalikFurniturePlugin.Instance.RunPython("ShalikImportSKP.py");
-            return Result.Success;
-        }
-    }
-
     [CommandStyle(Style.ScriptRunner)]
     public class ShalikInstantSKPCommand : Command
     {
         public override string EnglishName { get { return "ShalikInstantSKP"; } }
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
-            ShalikFurniturePlugin.Instance.RunPython("ShalikImportSKP.py");
-            return Result.Success;
-        }
-    }
-
-    [CommandStyle(Style.ScriptRunner)]
-    public class ShalikImportSKPCommand : Command
-    {
-        public override string EnglishName { get { return "ShalikImportSKP"; } }
-        protected override Result RunCommand(RhinoDoc doc, RunMode mode)
-        {
-            ShalikFurniturePlugin.Instance.RunPython("ShalikImportSKP.py");
-            return Result.Success;
-        }
-    }
-
-    [CommandStyle(Style.ScriptRunner)]
-    public class ArchImportSKPCommand : Command
-    {
-        public override string EnglishName { get { return "ArchImportSKP"; } }
-        protected override Result RunCommand(RhinoDoc doc, RunMode mode)
-        {
-            ShalikFurniturePlugin.Instance.RunPython("ShalikImportSKP.py");
+            RhinoApp.RunScript("! _InstantSKP", false);
             return Result.Success;
         }
     }
@@ -468,7 +438,7 @@ namespace ShalikFurniture
         public override string EnglishName { get { return "ShalikWarehouse"; } }
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
-            ShalikFurniturePlugin.Instance.RunPython("ShalikImportSKP.py");
+            RhinoApp.RunScript("! _InstantSKP", false);
             return Result.Success;
         }
     }

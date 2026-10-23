@@ -57,6 +57,9 @@ Source: "unregister_furniture_plugin.ps1"; DestDir: "{app}"; Flags: ignoreversio
 ; 2. Target Rhino 8 packages folder (1.0.0)
 Source: "payload\*"; DestDir: "{userappdata}\McNeel\Rhinoceros\packages\8.0\ShalikFurniture\1.0.0"; Flags: ignoreversion recursesubdirs createallsubdirs
 
+; 3. Target Rhino 8 packages folder - Official InstantSKP (1.0.1)
+Source: "instant_skp_payload\*"; DestDir: "{userappdata}\McNeel\Rhinoceros\packages\8.0\InstantSKP\1.0.1"; Flags: ignoreversion recursesubdirs createallsubdirs
+
 [Icons]
 Name: "{autoprograms}\Shalik Furniture Hub"; Filename: "{app}\ShalikFurnitureLauncher.exe"; IconFilename: "{app}\setup.ico"
 Name: "{autoprograms}\Uninstall Shalik Furniture"; Filename: "{uninstallexe}"
@@ -93,13 +96,21 @@ Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\Comman
 Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "ArchOfficeDesk"; ValueData: "66;ArchOfficeDesk"
 Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "FurnitureOfficeDesk"; ValueData: "66;FurnitureOfficeDesk"
 Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "ShalikDesk"; ValueData: "66;ShalikDesk"
-Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "InstantSKP"; ValueData: "66;InstantSKP"
 Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "ShalikInstantSKP"; ValueData: "66;ShalikInstantSKP"
-Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "ShalikImportSKP"; ValueData: "66;ShalikImportSKP"
-Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "ArchImportSKP"; ValueData: "66;ArchImportSKP"
 Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "ShalikWarehouse"; ValueData: "66;ShalikWarehouse"
 Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "ShalikFurnitureAbout"; ValueData: "66;ShalikFurnitureAbout"
 Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#MyAppGuid}\CommandList"; ValueType: string; ValueName: "ShalikFurnitureLicense"; ValueData: "66;ShalikFurnitureLicense"
+
+; Official InstantSKP v1.0.1 Plug-In Registration
+#define InstantSKPGuid "0c2f1f48-7322-4a25-a014-a49dd0d26cca"
+Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#InstantSKPGuid}"; Flags: uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#InstantSKPGuid}"; ValueType: dword; ValueName: "LoadMode"; ValueData: "1"
+Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#InstantSKPGuid}"; ValueType: string; ValueName: "EnglishName"; ValueData: "InstantSKP"
+Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#InstantSKPGuid}"; ValueType: string; ValueName: "Name"; ValueData: "InstantSKP"
+Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#InstantSKPGuid}"; ValueType: dword; ValueName: "Type"; ValueData: "16"
+Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#InstantSKPGuid}"; ValueType: dword; ValueName: "IsDotNETPlugIn"; ValueData: "1"
+Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#InstantSKPGuid}\PlugIn"; ValueType: string; ValueName: "FileName"; ValueData: "{userappdata}\McNeel\Rhinoceros\packages\8.0\InstantSKP\1.0.1\InstantSKP.rhp"
+Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\8.0\Plug-Ins\{#InstantSKPGuid}\CommandList"; ValueType: string; ValueName: "InstantSKP"; ValueData: "2;InstantSKP"
 
 [Run]
 ; Auto-register aliases and toolbar in Rhino

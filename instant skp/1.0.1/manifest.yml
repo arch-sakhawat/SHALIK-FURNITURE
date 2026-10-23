@@ -1,0 +1,19 @@
+---
+name: InstantSKP
+version: 1.0.1
+authors:
+- InstantSKP
+description: Improve panel starting workflow when opening Rhino.
+url: https://www.food4rhino.com/en/app/instantskp
+keywords:
+- SketchUp
+- 3DWarehouse
+- Import
+- Importer
+- Materials
+- RhinoPlugin
+- Architecture
+- InteriorDesign
+- 3DModeling
+- Workflow
+icon: icon.png

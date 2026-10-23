@@ -104,17 +104,24 @@ def ensure_toolbar_visible():
 
 
 def launch_generator(name):
+    key = name.lower()
+    if key in ("instantskp", "skp", "warehouse", "3dwarehouse"):
+        try:
+            Rhino.RhinoApp.RunScript("! _InstantSKP", False)
+        except Exception as ex:
+            if rs:
+                rs.MessageBox("Error launching InstantSKP: {}".format(ex), 0, "Shalik Furniture")
+        return
+
     cmd_map = {
         "bed": ("ShalikBed.py", "bed.py", "! _ShalikBed"),
         "sofa": ("ShalikSofa.py", "sofa.py", "! _ShalikSofa"),
         "dining": ("ShalikDiningTable.py", "dining table.py", "! _ShalikDiningTable"),
         "kitchen": ("ShalikKitchen.py", "kitchen.py", "! _ShalikKitchen"),
         "desk": ("ShalikOfficeDesk.py", "office desk.py", "! _ShalikOfficeDesk"),
-        "instantskp": ("ShalikImportSKP.py", "ShalikImportSKP.py", "! _ShalikImportSKP"),
-        "skp": ("ShalikImportSKP.py", "ShalikImportSKP.py", "! _ShalikImportSKP"),
         "about": ("ShalikAbout.py", "ShalikAbout.py", "! _ShalikFurnitureAbout"),
     }
-    targets = cmd_map.get(name.lower())
+    targets = cmd_map.get(key)
     if not targets:
         return
 
@@ -211,9 +218,9 @@ if RHINO_AVAILABLE:
                  "Executive desks, minimalist computer workstations with ergonomic mesh chairs.\n"
                  "Includes privacy modesty panels, wire management grommets & pedestal drawers.",
                  "desk"),
-                ("6. InstantSKP & 3D Warehouse Furniture",
-                 "Browse Trimble 3D Warehouse directly in Rhino or import local .SKP\n"
-                 "furniture models (Bed, Sofa, Chairs) with auto-align & materials.",
+                ("6. InstantSKP 3D Warehouse Importer",
+                 "Browse Trimble 3D Warehouse directly in Rhino and import SketchUp\n"
+                 "models (.SKP) with full textures, materials, and layer hierarchy.",
                  "instantskp"),
             ]
 
@@ -231,7 +238,7 @@ if RHINO_AVAILABLE:
 
                 btn_launch = forms.Button()
                 if key == "instantskp":
-                    btn_launch.Text = "Launch 3D Warehouse"
+                    btn_launch.Text = "Launch InstantSKP"
                 else:
                     btn_launch.Text = "Launch " + key.capitalize()
                 btn_launch.Size = drawing.Size(120, 28)

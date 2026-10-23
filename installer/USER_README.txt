@@ -25,7 +25,7 @@ your Rhino 8 environment:
    • Dining Set (ShalikDiningTable) - Auto-seated (2-12) tables & chairs
    • Kitchen Millwork (ShalikKitchen) - Ergonomic base, tall & LED lighting
    • Office Workstation (ShalikOfficeDesk) - Desks & ergonomic mesh chairs
-   • InstantSKP Importer (InstantSKP / ShalikImportSKP) - 3D Warehouse & .skp library
+   • InstantSKP 3D Warehouse (InstantSKP) - Official Trimble 3D Warehouse in-Rhino browser
    • About & Licence (ShalikFurnitureAbout) - Software credentials & legal notice
 
 2. AUTOMATED INTEGRATION:

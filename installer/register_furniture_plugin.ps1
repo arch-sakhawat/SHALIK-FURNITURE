@@ -48,17 +48,13 @@ if (Test-Path $settingsDir) {
         "ShalikDesk"             = "ShalikOfficeDesk.py"
         "OfficeDesk"             = "ShalikOfficeDesk.py"
         "Desk"                   = "ShalikOfficeDesk.py"
-        "ShalikImportSKP"        = "ShalikImportSKP.py"
-        "ArchImportSKP"          = "ShalikImportSKP.py"
-        "ImportSKP"              = "ShalikImportSKP.py"
-        "InstantSKP"             = "ShalikImportSKP.py"
-        "ShalikInstantSKP"       = "ShalikImportSKP.py"
-        "ShalikWarehouse"        = "ShalikImportSKP.py"
         "ShalikFurnitureAbout"   = "ShalikAbout.py"
         "ShalikFurnitureLicense" = "ShalikAbout.py"
         "ArchFurnitureAbout"     = "ShalikAbout.py"
         "ArchFurnitureLicense"   = "ShalikAbout.py"
     }
+
+    $legacySKPAliases = @("InstantSKP", "ShalikInstantSKP", "ShalikImportSKP", "ImportSKP", "ArchImportSKP", "ShalikWarehouse", "SKPImport")
 
     foreach ($file in $settingsFiles) {
         try {
@@ -88,6 +84,23 @@ if (Test-Path $settingsDir) {
                     }
                     $node.InnerText = $macro
                 }
+                # Clean up any legacy SKP script aliases so native InstantSKP command is invoked
+                foreach ($legacy in $legacySKPAliases) {
+                    $legNode = $dict.SelectSingleNode("value[@key='$legacy']")
+                    if ($legNode -ne $null) {
+                        $dict.RemoveChild($legNode) | Out-Null
+                    }
+                }
+
+                # Alias ShalikInstantSKP directly to official native InstantSKP command
+                $instantNode = $dict.SelectSingleNode("value[@key='ShalikInstantSKP']")
+                if ($instantNode -eq $null) {
+                    $instantNode = $xml.CreateElement("value")
+                    $instantNode.SetAttribute("key", "ShalikInstantSKP")
+                    $dict.AppendChild($instantNode) | Out-Null
+                }
+                $instantNode.InnerText = "! _InstantSKP"
+
                 $xml.Save($file.FullName)
                 Write-Host "Updated aliases in $($file.Name)"
             }

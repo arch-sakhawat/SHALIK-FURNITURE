@@ -12,4 +12,17 @@ if ($LASTEXITCODE -ne 0) { throw "CSC compile failed for ShalikFurniture.rhp" }
 
 Copy-Item $outRoot $outDist -Force
 Write-Host "Compilation SUCCESS! Plugin generated at: $outRoot and $outDist"
-Get-Item $outRoot, $outDist | Select-Object Name, Length, LastWriteTime
+
+# Compile ShalikFurnitureLauncher.exe
+$launcherSrc = "E:\antigravity\Shalik Furniture\src\ShalikFurnitureLauncher.cs"
+$launcherOutRoot = "E:\antigravity\Shalik Furniture\ShalikFurnitureLauncher.exe"
+$launcherOutDist = "E:\antigravity\Shalik Furniture\dist\ShalikFurnitureLauncher.exe"
+$setupIco = "E:\antigravity\Shalik Furniture\setup.ico"
+
+Write-Host "Compiling ShalikFurnitureLauncher.exe..."
+& $csc /target:winexe /optimize+ /win32icon:$setupIco /out:$launcherOutRoot /reference:System.dll /reference:System.Core.dll /reference:System.Windows.Forms.dll /reference:System.Drawing.dll $launcherSrc
+if ($LASTEXITCODE -ne 0) { throw "CSC compile failed for ShalikFurnitureLauncher.exe" }
+
+Copy-Item $launcherOutRoot $launcherOutDist -Force
+Write-Host "Compilation SUCCESS! Launcher generated at: $launcherOutRoot and $launcherOutDist"
+Get-Item $outRoot, $outDist, $launcherOutRoot, $launcherOutDist | Select-Object Name, Length, LastWriteTime

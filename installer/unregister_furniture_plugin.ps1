@@ -12,7 +12,7 @@ if (Test-Path $settingsDir) {
         "ShalikDiningTable", "ArchDiningTable", "FurnitureDiningTable", "ShalikDiningSet",
         "ShalikKitchen", "ArchKitchen", "FurnitureKitchen",
         "ShalikOfficeDesk", "ArchOfficeDesk", "FurnitureOfficeDesk", "ShalikDesk",
-        "ShalikFurnitureAbout", "ShalikFurnitureLicense"
+        "ShalikInstantSKP", "ShalikFurnitureAbout", "ShalikFurnitureLicense"
     )
 
     foreach ($file in $settingsFiles) {

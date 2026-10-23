@@ -27,7 +27,6 @@ Copy-Item (Join-Path $root "ShalikFurnitureLauncher.exe") $payloadDir -Force
 Copy-Item (Join-Path $root "ArchUnits.py") $payloadDir -Force
 Copy-Item (Join-Path $root "ShalikAbout.py") $payloadDir -Force
 Copy-Item (Join-Path $root "ShalikFurniture.py") $payloadDir -Force
-Copy-Item (Join-Path $root "ShalikImportSKP.py") $payloadDir -Force
 Copy-Item (Join-Path $root "setup.ico") $payloadDir -Force
 Copy-Item (Join-Path $root "icon.png") $payloadDir -Force
 Copy-Item (Join-Path $root "manifest.yml") $payloadDir -Force
@@ -45,6 +44,14 @@ if (Test-Path (Join-Path $root "author.jpg")) {
 Copy-Item (Join-Path $root "commands") $payloadDir -Recurse -Force
 Copy-Item (Join-Path $root "Code") $payloadDir -Recurse -Force
 Copy-Item (Join-Path $root "icons") $payloadDir -Recurse -Force
+
+# Stage official InstantSKP payload
+$instantSkpPayloadDir = Join-Path $installerDir "instant_skp_payload"
+if (Test-Path $instantSkpPayloadDir) {
+    Remove-Item -Recurse -Force $instantSkpPayloadDir
+}
+New-Item -ItemType Directory -Path $instantSkpPayloadDir | Out-Null
+Copy-Item (Join-Path $root "instant skp\1.0.1\*") $instantSkpPayloadDir -Recurse -Force
 
 Write-Host "Payload prepared with $((Get-ChildItem -Recurse $payloadDir).Count) files."
 
