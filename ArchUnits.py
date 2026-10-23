@@ -1,3 +1,4 @@
+﻿# -*- coding: utf-8 -*-
 # ==============================================================================
 # Shalik Architectural Modeling Suite for Rhino 8 & 7
 # Author & Architect: Sakhawat Hosen Sumon
@@ -7,11 +8,10 @@
 #
 # COPYRIGHT & LEGAL WARNING:
 # Copyright (c) 2026 Sakhawat Hosen Sumon. All Rights Reserved.
-# THIS SOFTWARE IS STRICTLY PROPRIETARY AND COMMERCIAL — NOT FREE.
+# THIS SOFTWARE IS STRICTLY PROPRIETARY AND COMMERCIAL - NOT FREE.
 # Unauthorized copying, reverse-engineering, redistribution, or illegal sharing
 # is strictly prohibited and subject to immediate legal lawsuits and prosecution.
 # ==============================================================================
-# -*- coding: utf-8 -*-
 """
 ArchUnits - Universal Architectural Unit System for Shalik (ArchTools)
 Supports seamless conversion between document model units (mm, cm, m, in, ft)
@@ -251,4 +251,5 @@ def adapt_num_fields(num_fields, non_length_keys, scale_from_inch, unit_name):
             new_mx = round(mx * scale_from_inch, 3)
             adapted.append((key, new_label, new_dflt, new_mn, new_mx, is_int))
     return adapted
+
 

@@ -1,13 +1,13 @@
-﻿# ==============================================================================
+﻿# -*- coding: utf-8 -*-
+# ==============================================================================
 # Shalik Furniture Suite - Parametric Generator
 # Author & Architect: Sakhawat Hosen Sumon (arch.sakhawat@gmail.com)
 # GitHub: https://github.com/arch-sakhawat/SHALIK-FURNITURE
 # Copyright (c) 2026 Sakhawat Hosen Sumon. All Rights Reserved.
-# THIS SOFTWARE IS STRICTLY PROPRIETARY AND COMMERCIAL — NOT FREE.
+# THIS SOFTWARE IS STRICTLY PROPRIETARY AND COMMERCIAL - NOT FREE.
 # Unauthorized copying, distribution, or reverse-engineering is strictly
 # prohibited and subject to immediate legal court cases and prosecution.
 # ==============================================================================
-# -*- coding: utf-8 -*-
 from __future__ import division
 """
 Modern Parametric Office Desk, Computer Workstation & Ergonomic Chair Generator (Shalik / ArchTools)
@@ -2286,3 +2286,4 @@ def run():
 
 if __name__ in ["__main__", "ArchOfficeDesk", "OfficeDesk", "__builtin__"]:
     create_modern_office_desk()
+

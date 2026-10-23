@@ -1,3 +1,4 @@
+﻿# -*- coding: utf-8 -*-
 # ==============================================================================
 # Shalik Furniture Suite - In-Rhino 3D Warehouse Browser & Instant SKP Importer
 # Author & Architect: Sakhawat Hosen Sumon
@@ -7,11 +8,10 @@
 #
 # COPYRIGHT & LEGAL WARNING:
 # Copyright (c) 2026 Sakhawat Hosen Sumon. All Rights Reserved.
-# THIS SOFTWARE IS STRICTLY PROPRIETARY AND COMMERCIAL — NOT FREE.
+# THIS SOFTWARE IS STRICTLY PROPRIETARY AND COMMERCIAL - NOT FREE.
 # Unauthorized copying, reverse-engineering, redistribution, or illegal sharing
 # is strictly prohibited and subject to immediate legal lawsuits and prosecution.
 # ==============================================================================
-# -*- coding: utf-8 -*-
 
 import os
 import sys
@@ -235,11 +235,14 @@ if RHINO_AVAILABLE:
             lbl_file.TextAlignment = forms.TextAlignment.Center
             layout.AddRow(lbl_file)
 
-            layout.AddRow(forms.Label() { Text = "Choose how to place this furniture model in your Rhino scene:" })
+            lbl_hint = forms.Label()
+            lbl_hint.Text = "Choose how to place this furniture model in your Rhino scene:"
+            lbl_hint.TextAlignment = forms.TextAlignment.Center
+            layout.AddRow(lbl_hint)
 
             # Buttons
             btn_pick = forms.Button()
-            btn_pick.Text = "📍 Pick Insertion Point in Viewport (Recommended)"
+            btn_pick.Text = u"Pick Insertion Point in Viewport (Recommended)"
             btn_pick.Font = drawing.Font(drawing.FontFamilies.Sans, 9.5, drawing.FontStyle.Bold)
             btn_pick.Height = 36
             btn_pick.BackgroundColor = drawing.Color.FromArgb(139, 0, 0)
@@ -248,7 +251,7 @@ if RHINO_AVAILABLE:
             layout.AddRow(btn_pick)
 
             btn_origin = forms.Button()
-            btn_origin.Text = "📐 Place at World Origin (0, 0, 0)"
+            btn_origin.Text = u"Place at World Origin (0, 0, 0)"
             btn_origin.Font = drawing.Font(drawing.FontFamilies.Sans, 9)
             btn_origin.Height = 32
             btn_origin.Click += self.OnOriginClicked
@@ -282,7 +285,7 @@ if RHINO_AVAILABLE:
         """
         def __init__(self):
             super(WarehouseBrowserForm, self).__init__()
-            self.Title = "Shalik Furniture — Instant 3D Warehouse & SKP Importer"
+            self.Title = "Shalik Furniture - Instant 3D Warehouse & SKP Importer"
             self.ClientSize = drawing.Size(1080, 800)
             self.MinimumSize = drawing.Size(760, 500)
             self.Resizable = True
@@ -313,7 +316,7 @@ if RHINO_AVAILABLE:
             hdr_layout.Spacing = drawing.Size(10, 4)
 
             lbl_title = forms.Label()
-            lbl_title.Text = "SHALIK FURNITURE — 3D WAREHOUSE & INSTANT SKP"
+            lbl_title.Text = "SHALIK FURNITURE - 3D WAREHOUSE & INSTANT SKP"
             lbl_title.Font = drawing.Font(drawing.FontFamilies.Sans, 13, drawing.FontStyle.Bold)
             lbl_title.TextColor = drawing.Color.FromArgb(255, 255, 255)
 
@@ -336,22 +339,22 @@ if RHINO_AVAILABLE:
             nav_layout.Spacing = drawing.Size(6, 4)
 
             btn_back = forms.Button()
-            btn_back.Text = "◀ Back"
+            btn_back.Text = "< Back"
             btn_back.Width = 65
             btn_back.Click += lambda s, e: self.web_view.GoBack() if self.web_view.CanGoBack else None
 
             btn_fwd = forms.Button()
-            btn_fwd.Text = "Forward ▶"
+            btn_fwd.Text = "Forward >"
             btn_fwd.Width = 80
             btn_fwd.Click += lambda s, e: self.web_view.GoForward() if self.web_view.CanGoForward else None
 
             btn_reload = forms.Button()
-            btn_reload.Text = "⟳ Reload"
+            btn_reload.Text = "Reload"
             btn_reload.Width = 70
             btn_reload.Click += lambda s, e: self.web_view.Reload()
 
             btn_home = forms.Button()
-            btn_home.Text = "⌂ Home"
+            btn_home.Text = "Home"
             btn_home.Width = 70
             btn_home.Click += lambda s, e: self.NavigateTo("https://3dwarehouse.sketchup.com/search/models?q=furniture")
 
@@ -360,18 +363,18 @@ if RHINO_AVAILABLE:
             self.txt_search.KeyDown += self.OnSearchKeyDown
 
             btn_search = forms.Button()
-            btn_search.Text = "🔍 Search"
+            btn_search.Text = "Search"
             btn_search.Width = 80
             btn_search.Click += self.OnSearchClicked
 
             btn_local = forms.Button()
-            btn_local.Text = "📥 Import Local .SKP"
+            btn_local.Text = "Import Local .SKP"
             btn_local.Font = drawing.Font(drawing.FontFamilies.Sans, 8.5, drawing.FontStyle.Bold)
             btn_local.Width = 140
             btn_local.Click += self.OnImportLocalClicked
 
             btn_folder = forms.Button()
-            btn_folder.Text = "📁 Downloads"
+            btn_folder.Text = "Downloads"
             btn_folder.Width = 95
             btn_folder.Click += self.OnOpenFolderClicked
 
@@ -581,3 +584,4 @@ def run():
 
 if __name__ in ["__main__", "ShalikImportSKP", "InstantSKP", "ShalikInstantSKP", "ShalikWarehouse"]:
     show_warehouse_browser()
+

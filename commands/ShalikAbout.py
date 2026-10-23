@@ -1,3 +1,4 @@
+﻿# -*- coding: utf-8 -*-
 # ==============================================================================
 # Shalik Furniture Modeling Suite for Rhino 8 & 7
 # Author & Architect: Sakhawat Hosen Sumon
@@ -7,11 +8,10 @@
 #
 # COPYRIGHT & LEGAL WARNING:
 # Copyright (c) 2026 Sakhawat Hosen Sumon. All Rights Reserved.
-# THIS SOFTWARE IS STRICTLY PROPRIETARY AND COMMERCIAL — NOT FREE.
+# THIS SOFTWARE IS STRICTLY PROPRIETARY AND COMMERCIAL - NOT FREE.
 # Unauthorized copying, reverse-engineering, redistribution, or illegal sharing
 # is strictly prohibited and subject to immediate legal lawsuits and prosecution.
 # ==============================================================================
-# -*- coding: utf-8 -*-
 
 import os
 import sys
@@ -157,7 +157,7 @@ if RHINO_AVAILABLE:
             gb_legal_layout.Padding = drawing.Padding(8)
 
             lbl_warn = forms.Label()
-            lbl_warn.Text = "⚠️ COMMERCIAL PROPRIETARY SOFTWARE — THIS IS NOT FREE"
+            lbl_warn.Text = "⚠️ COMMERCIAL PROPRIETARY SOFTWARE - THIS IS NOT FREE"
             lbl_warn.Font = drawing.Font(drawing.FontFamilies.Sans, 9, drawing.FontStyle.Bold)
             lbl_warn.TextColor = drawing.Color.FromArgb(180, 0, 0)
             lbl_warn.TextAlignment = forms.TextAlignment.Center
@@ -234,3 +234,4 @@ def run():
 
 if __name__ in ["__main__", "ArchAbout", "ShalikAbout", "ArchLicense", "ShalikLicense"]:
     show_license_dialog()
+

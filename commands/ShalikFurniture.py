@@ -1,3 +1,4 @@
+﻿# -*- coding: utf-8 -*-
 # ==============================================================================
 # Shalik Furniture Modeling Suite for Rhino 8 & 7
 # Master Furniture Hub & Generator Launcher
@@ -8,11 +9,10 @@
 #
 # COPYRIGHT & LEGAL WARNING:
 # Copyright (c) 2026 Sakhawat Hosen Sumon. All Rights Reserved.
-# THIS SOFTWARE IS STRICTLY PROPRIETARY AND COMMERCIAL — NOT FREE.
+# THIS SOFTWARE IS STRICTLY PROPRIETARY AND COMMERCIAL - NOT FREE.
 # Unauthorized copying, reverse-engineering, redistribution, or illegal sharing
 # is strictly prohibited and subject to immediate legal lawsuits and prosecution.
 # ==============================================================================
-# -*- coding: utf-8 -*-
 
 import os
 import sys
@@ -288,3 +288,4 @@ def run():
 
 if __name__ in ["__main__", "ShalikFurniture", "ArchFurniture", "FurnitureHub"]:
     show_hub()
+
