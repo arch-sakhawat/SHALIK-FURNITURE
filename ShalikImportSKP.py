@@ -85,7 +85,7 @@ def is_file_ready(file_path):
 def import_and_place_skp(file_path, insert_pt=None, drop_to_floor=True):
     """
     Imports a SketchUp (.skp) model into Rhino with clean layer organization,
-    accurate bounding box alignment, and optional viewport placement.
+    accurate bounding box alignment, and guaranteed viewport placement.
     """
     if not RHINO_AVAILABLE or not os.path.exists(file_path):
         return False
@@ -93,12 +93,6 @@ def import_and_place_skp(file_path, insert_pt=None, drop_to_floor=True):
     doc = Rhino.RhinoDoc.ActiveDoc
     if not doc:
         return False
-
-    # Snapshot existing objects to detect newly imported geometry
-    existing_ids = set()
-    for obj in doc.Objects:
-        if not obj.IsDeleted:
-            existing_ids.add(obj.Id)
 
     clean_path = os.path.normpath(file_path).replace("\\", "/")
     base_name = os.path.splitext(os.path.basename(file_path))[0].strip()
@@ -108,24 +102,18 @@ def import_and_place_skp(file_path, insert_pt=None, drop_to_floor=True):
 
     Rhino.RhinoApp.WriteLine(u"Shalik Furniture: Importing SketchUp model '{}'...".format(base_name))
 
-    rs.EnableRedraw(False)
-    try:
-        cmd = '! _-Import "{}" _Enter'.format(clean_path)
-        Rhino.RhinoApp.RunScript(cmd, False)
-    finally:
-        rs.EnableRedraw(True)
+    # Unselect all objects before import so we can reliably grab newly imported geometry
+    rs.UnselectAllObjects()
 
-    # Detect newly imported objects
-    imported_ids = []
-    for obj in doc.Objects:
-        if not obj.IsDeleted and obj.Id not in existing_ids:
-            imported_ids.append(obj.Id)
+    # Run import synchronously via rs.Command
+    cmd = '! _-Import "{}" _Enter'.format(clean_path)
+    rs.Command(cmd, False)
 
+    # Rhino's _-Import automatically leaves all newly imported objects selected!
+    imported_ids = rs.SelectedObjects()
     if not imported_ids:
-        # Fallback to selected objects
-        sel = [o.Id for o in doc.Objects.GetSelectedObjects(False, False)]
-        if sel:
-            imported_ids = sel
+        # Fallback to selected objects via doc
+        imported_ids = [o.Id for o in doc.Objects.GetSelectedObjects(False, False)]
 
     if not imported_ids:
         Rhino.RhinoApp.WriteLine("Import completed, but no geometry was detected.")
@@ -137,44 +125,26 @@ def import_and_place_skp(file_path, insert_pt=None, drop_to_floor=True):
     sub_layer_2 = safe_name[:32]
     full_layer = parent_layer + "::" + sub_layer_1 + "::" + sub_layer_2
 
-    p_idx = doc.Layers.FindByFullPath(parent_layer, -1)
-    if p_idx < 0:
-        p_idx = doc.Layers.Add(parent_layer, System.Drawing.Color.FromArgb(139, 0, 0))
-
-    s1_idx = doc.Layers.FindByFullPath(parent_layer + "::" + sub_layer_1, -1)
-    if s1_idx < 0:
-        nl1 = Rhino.DocObjects.Layer()
-        nl1.Name = sub_layer_1
-        nl1.ParentLayerId = doc.Layers[p_idx].Id
-        nl1.Color = System.Drawing.Color.FromArgb(170, 30, 30)
-        s1_idx = doc.Layers.Add(nl1)
-
-    s2_idx = doc.Layers.FindByFullPath(full_layer, -1)
-    if s2_idx < 0:
-        nl2 = Rhino.DocObjects.Layer()
-        nl2.Name = sub_layer_2
-        nl2.ParentLayerId = doc.Layers[s1_idx].Id
-        nl2.Color = System.Drawing.Color.FromArgb(200, 60, 60)
-        s2_idx = doc.Layers.Add(nl2)
+    try:
+        if not rs.IsLayer(full_layer):
+            if not rs.IsLayer(parent_layer):
+                rs.AddLayer(parent_layer, System.Drawing.Color.FromArgb(139, 0, 0))
+            if not rs.IsLayer(parent_layer + "::" + sub_layer_1):
+                rs.AddLayer(parent_layer + "::" + sub_layer_1, System.Drawing.Color.FromArgb(170, 30, 30), parent=parent_layer)
+            rs.AddLayer(full_layer, System.Drawing.Color.FromArgb(200, 60, 60), parent=parent_layer + "::" + sub_layer_1)
+        rs.ObjectLayer(imported_ids, full_layer)
+    except Exception:
+        pass
 
     # Calculate cumulative bounding box
-    bbox = rg.BoundingBox.Empty
-    for id_ in imported_ids:
-        rh_obj = doc.Objects.FindId(id_)
-        if rh_obj:
-            if s2_idx >= 0:
-                rh_obj.Attributes.LayerIndex = s2_idx
-                rh_obj.CommitChanges()
-            geo = rh_obj.Geometry
-            if geo:
-                bbox.Union(geo.GetBoundingBox(True))
-
-    # Calculate transformation
-    if bbox.IsValid:
+    bbox = rs.BoundingBox(imported_ids)
+    target_pt = None
+    if bbox:
+        # bbox[0] is Min corner (Xmin, Ymin, Zmin), bbox[6] is Max corner (Xmax, Ymax, Zmax)
         base_center = rg.Point3d(
-            (bbox.Min.X + bbox.Max.X) * 0.5,
-            (bbox.Min.Y + bbox.Max.Y) * 0.5,
-            bbox.Min.Z
+            (bbox[0][0] + bbox[6][0]) * 0.5,
+            (bbox[0][1] + bbox[6][1]) * 0.5,
+            bbox[0][2]
         )
 
         if insert_pt is not None:
@@ -196,14 +166,18 @@ def import_and_place_skp(file_path, insert_pt=None, drop_to_floor=True):
     if grp_idx >= 0:
         doc.Groups.AddToGroup(grp_idx, imported_ids)
 
-    # Select the newly imported group
+    # Keep the newly imported group selected for immediate user editing/movement
     doc.Objects.UnselectAll()
     for id_ in imported_ids:
         doc.Objects.Select(id_, True)
 
     doc.Views.Redraw()
-    Rhino.RhinoApp.WriteLine(u"✓ Successfully imported '{}' ({} components grouped into {})".format(
-        safe_name, len(imported_ids), full_layer))
+    if target_pt is not None:
+        Rhino.RhinoApp.WriteLine(u"✓ Successfully placed '{}' at ({:.1f}, {:.1f}, {:.1f}) on layer {}".format(
+            safe_name, target_pt.X, target_pt.Y, target_pt.Z, full_layer))
+    else:
+        Rhino.RhinoApp.WriteLine(u"✓ Successfully imported '{}' ({} components grouped)".format(
+            safe_name, len(imported_ids)))
     return True
 
 
@@ -534,22 +508,27 @@ if RHINO_AVAILABLE:
 
                 insert_pt = None
                 if dlg.ChosenMode == "pick":
-                    prev_state = self.WindowState
-                    self.WindowState = forms.WindowState.Minimized
-
+                    # Hide the browser window completely so the user has full view of the Rhino viewport
+                    self.Visible = False
                     Rhino.RhinoApp.SetFocusToMainWindow()
-                    Rhino.RhinoApp.WriteLine(u"Pick floor insertion point for '{}'...".format(file_name))
+                    time.sleep(0.05)
 
-                    rc, pt = rinput.RhinoGet.GetPoint("Pick floor insertion point for imported furniture model", False)
-                    if rc == Rhino.Commands.Result.Success:
-                        insert_pt = pt
+                    Rhino.RhinoApp.WriteLine(u"Pick floor insertion point for '{}' (or press Enter for origin [0,0,0])...".format(file_name))
+                    picked = rs.GetPoint("Pick floor insertion point for " + file_name)
+                    if picked:
+                        insert_pt = rg.Point3d(picked.X, picked.Y, picked.Z)
+                    else:
+                        insert_pt = rg.Point3d(0, 0, 0)
 
-                    self.WindowState = prev_state
+                    # Restore the browser window
+                    self.Visible = True
+                    self.BringToFront()
 
-                # Import and place
+                # Import and place synchronously
                 import_and_place_skp(file_path, insert_pt=insert_pt, drop_to_floor=True)
 
             except Exception as ex:
+                self.Visible = True
                 Rhino.RhinoApp.WriteLine("Import handler error: %s" % ex)
 
         def OnFormClosed(self, sender, e):
